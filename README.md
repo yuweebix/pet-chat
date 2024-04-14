@@ -34,7 +34,7 @@ This is my pet project implementing Chatting functionality. This application is 
 │   │   ├── user.go
 │   │   ├── room.go
 │   │   ├── message.go
-│   │   └── admin.go  # New file for admin handlers
+│   │   └── admin.go
 │   ├── model
 │   │   ├── user.go
 │   │   ├── room.go
@@ -44,9 +44,9 @@ This is my pet project implementing Chatting functionality. This application is 
 │       ├── user.go
 │       ├── room.go
 │       ├── message.go
-│       └── admin.go  # New file for admin database operations
+│       └── admin.go
 ├── middleware
-│   └── auth.go  # New directory and file for authentication middleware
+│   └── auth.go
 ├── scripts
 ├── web
 │   ├── static
@@ -58,7 +58,7 @@ This is my pet project implementing Chatting functionality. This application is 
 │       ├── login.html
 │       ├── register.html
 │       ├── chatroom.html
-│       └── admin.html  # New file for admin dashboard
+│       └── admin.html
 ├── .env
 ├── .gitignore
 ├── Dockerfile
