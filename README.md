@@ -29,13 +29,13 @@ This is my pet project implementing Chatting functionality. This application is 
 │   └── server
 │       └── main.go
 ├── pkg
-│   ├── handler
+│   ├── handlers
 │   │   ├── handler.go
 │   │   ├── user.go
 │   │   ├── room.go
 │   │   ├── message.go
 │   │   └── admin.go
-│   ├── model
+│   ├── models
 │   │   ├── user.go
 │   │   ├── room.go
 │   │   └── message.go
