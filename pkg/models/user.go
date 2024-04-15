@@ -15,3 +15,9 @@ type User struct {
 func (User) TableName() string {
 	return "users"
 }
+
+type UserCreate struct {
+	Email    string
+	Username string
+	Password string
+}

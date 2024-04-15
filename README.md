@@ -1,4 +1,4 @@
-# PET-Chat
+# Pet-Chat
 ## GoLang Real-Time Chat Application
 
 This is my pet project implementing Chatting functionality. This application is built using GoLang and provides multiple chat rooms. Users can join any chat room and start chatting instantly.

@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"html/template"
+	"path/filepath"
 	"regexp"
 
 	"golang.org/x/crypto/bcrypt"
@@ -29,4 +31,8 @@ func CheckUsername(username string) bool {
 func CheckPassword(password string) bool {
 	re := regexp.MustCompile(`^.{8,}$`)
 	return re.MatchString(password)
+}
+
+func ParseTemplates(folderPath string) (*template.Template, error) {
+	return template.ParseGlob(filepath.Join(folderPath, "*.html"))
 }

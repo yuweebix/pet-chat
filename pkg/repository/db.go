@@ -7,16 +7,11 @@ import (
 	"github.com/yuweebix/pet-chat/pkg/models"
 	"github.com/yuweebix/pet-chat/pkg/utils"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func InitDB() (*gorm.DB, error) {
-	if err := godotenv.Load(); err != nil {
-		return nil, err
-	}
-
 	dsn := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
