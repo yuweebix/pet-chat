@@ -8,6 +8,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/yuweebix/pet-chat/pkg/handlers"
+	"github.com/yuweebix/pet-chat/pkg/middleware"
 	"github.com/yuweebix/pet-chat/pkg/repository"
 )
 
@@ -28,5 +29,17 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.Handle("/users/", http.StripPrefix("/users", userMux))
-	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s", os.Getenv("DOMAIN"), os.Getenv("PORT")), mux))
+
+	stack := middleware.CreateStack(
+		middleware.Logging,
+		middleware.AllowCors,
+		middleware.IsAuthed,
+		middleware.CheckPermissions,
+	)
+
+	server := http.Server{
+		Addr:    fmt.Sprintf("%s:%s", os.Getenv("DOMAIN"), os.Getenv("PORT")),
+		Handler: stack(mux),
+	}
+	log.Fatal(server.ListenAndServe())
 }
