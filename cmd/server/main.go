@@ -17,24 +17,20 @@ func main() {
 		log.Fatal("Failed to load .env:", err)
 	}
 
-	_, err := repository.InitDB()
+	db, err := repository.InitDB()
 	if err != nil {
 		log.Fatal("Failed to initialise the database:", err)
 	}
 
-	userMux := http.NewServeMux()
-	if err := handlers.InitUserRoutes(userMux); err != nil {
-		log.Fatal("Failed to initialise user routes:", err)
+	mux, err := handlers.NewRouter(db)
+	if err != nil {
+		log.Fatal("Failed to initialise routers:", err)
 	}
-
-	mux := http.NewServeMux()
-	mux.Handle("/users/", http.StripPrefix("/users", userMux))
 
 	stack := middleware.CreateStack(
 		middleware.Logging,
-		middleware.AllowCors,
-		middleware.IsAuthed,
-		middleware.CheckPermissions,
+		// middleware.IsAuthed,
+		// middleware.CheckPermissions,
 	)
 
 	server := http.Server{

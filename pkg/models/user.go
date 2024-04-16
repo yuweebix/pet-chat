@@ -17,7 +17,20 @@ func (User) TableName() string {
 }
 
 type UserCreate struct {
+	Email          string
+	Username       string
+	Password       string
+	RepeatPassword string
+}
+
+type UserLogin struct {
+	UsernameOrEmail string
+	Password        string
+}
+
+type UserGet struct {
 	Email    string
 	Username string
-	Password string
+	IsAdmin  bool
+	Rooms    []Room
 }

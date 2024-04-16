@@ -1,7 +1,7 @@
 # Pet-Chat
 ## Go Real-Time Chat Application
 
-This is my pet project implementing Chatting functionality. This application is built using Go and provides multiple chat rooms. Users can join any chat room and start chatting instantly.
+This is my pet project implementing Chatting functionality without the use of third-party services with the new advanced features of Go 1.22. This application provides multiple chat rooms. Users can join any chat room and start chatting.
 
 ## Technologies and Methods
 

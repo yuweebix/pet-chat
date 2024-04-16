@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+  <title>Login at Pet-Chat</title>
+</head>
+<body>
+  <h1>Login at Pet-Chat</h1>
+  <form hx-post="/users/login/" hx-trigger="submit">
+    <label for="username">Username or Email:</label><br>
+    <input type="text" id="username" name="username_or_email" required><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required><br>
+    <input type="submit" value="Login">
+  </form>
+</body>
+</html>
