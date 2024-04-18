@@ -60,3 +60,23 @@ func GetUser(db *gorm.DB, username string) (*models.UserGet, error) {
 
 	return user_info, nil
 }
+
+func DeleteUser(db *gorm.DB, user *models.User) error {
+	result := db.Delete(user)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
+
+func UpdateUser(db *gorm.DB, updatedUser *models.UserCreate, user *models.User) error {
+	user.Email = updatedUser.Email
+	user.Username = updatedUser.Username
+	user.HashedPassword, _ = utils.HashPassword(updatedUser.Password)
+
+	result := db.Save(user)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}

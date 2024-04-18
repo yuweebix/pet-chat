@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/yuweebix/pet-chat/pkg/handlers"
@@ -22,6 +23,17 @@ func main() {
 		log.Fatal("Failed to initialise the database:", err)
 	}
 
+	// clean up the expired cookies every 30 minutes
+	go func() {
+		for {
+			err := repository.CleanupSessions(db)
+			if err != nil {
+				log.Fatal("Failed to cleanup sessions:", err)
+			}
+			time.Sleep(30 * time.Minute)
+		}
+	}()
+
 	mux, err := handlers.NewRouter(db)
 	if err != nil {
 		log.Fatal("Failed to initialise routers:", err)
@@ -29,7 +41,7 @@ func main() {
 
 	stack := middleware.CreateStack(
 		middleware.Logging,
-		// middleware.IsAuthed,
+		// middleware.IsAuthed(db),
 		// middleware.CheckPermissions,
 	)
 

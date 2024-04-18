@@ -4,20 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
-  <title>Register at Pet-Chat</title>
+  <title>Profile</title>
 </head>
 <body>
-  <h1>Register at Pet-Chat</h1>
-  <form hx-post="/users/unauthed/register/" hx-trigger="submit">
+  <h1>Profile</h1>
+  <form hx-post="users/authed/me/update/" hx-trigger="submit">
     <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br>
+    <input type="email" id="email" name="email" value="{{.Email}}" required><br>
     <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" required><br>
+    <input type="text" id="username" name="username" value="{{.Username}}" required><br>
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password" required><br>
     <label for="password">Repeat password:</label><br>
     <input type="password" id="repeat_password" name="repeat_password" required><br>
-    <input type="submit" value="Register">
+    <input type="submit" value="Update">
+  </form>
+  <form hx-post="users/authed/me/logout/" hx-trigger="submit">
+    <button type="submit">Logout</button>
+  </form>
+  <form hx-post="users/authed/me/delete/" hx-trigger="submit">
+    <button type="submit">Delete Account</button>
   </form>
 </body>
 </html>

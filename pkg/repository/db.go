@@ -64,3 +64,20 @@ func initAdmin(db *gorm.DB) error {
 	}
 	return nil
 }
+
+func CleanupSessions(db *gorm.DB) error {
+	sessions, err := GetAllSessions(db)
+	if err != nil {
+		return err
+	}
+
+	for _, session := range sessions {
+		if session.IsExpired() {
+			if err := DeleteSession(db, &session); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
