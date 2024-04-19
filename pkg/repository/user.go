@@ -61,8 +61,8 @@ func GetUser(db *gorm.DB, username string) (*models.UserGet, error) {
 	return user_info, nil
 }
 
-func DeleteUser(db *gorm.DB, user *models.User) error {
-	result := db.Delete(user)
+func DeleteUser(db *gorm.DB, userID uint) error {
+	result := db.Delete(&models.User{}, userID)
 	if result.Error != nil {
 		return result.Error
 	}

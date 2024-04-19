@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>Profile</h1>
-  <form hx-post="users/authed/me/update/" hx-trigger="submit">
+  <form hx-put="update/" hx-trigger="submit">
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" value="{{.Email}}" required><br>
     <label for="username">Username:</label><br>
@@ -19,10 +19,10 @@
     <input type="password" id="repeat_password" name="repeat_password" required><br>
     <input type="submit" value="Update">
   </form>
-  <form hx-post="users/authed/me/logout/" hx-trigger="submit">
+  <form hx-post="logout/" hx-trigger="submit">
     <button type="submit">Logout</button>
   </form>
-  <form hx-post="users/authed/me/delete/" hx-trigger="submit">
+  <form hx-delete="delete/" hx-trigger="submit">
     <button type="submit">Delete Account</button>
   </form>
 </body>

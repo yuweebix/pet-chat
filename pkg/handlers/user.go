@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"errors"
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -159,7 +158,6 @@ func me(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user := session.User
-
 	data := map[string]interface{}{
 		"Email":    user.Email,
 		"Username": user.Username,
@@ -210,8 +208,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	fmt.Println(session)
-	fmt.Println(&session.User)
+
 	if err := repository.UpdateUser(db, &updatedUser, &session.User); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -246,25 +243,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	err = repository.DeleteUser(db, &session.User)
+	err = repository.DeleteUser(db, session.UserID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	// Log out the user by deleting the session
-	err = repository.DeleteSession(db, session)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	// Set the cookie's max age to -1 to delete it
-	cookie, err := r.Cookie("session_token")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	cookie.MaxAge = -1
-	http.SetCookie(w, cookie)
+	logout(w, r)
 }

@@ -18,7 +18,7 @@ func CreateSession(db *gorm.DB, user *models.User) error {
 
 	session := &models.Session{
 		Token:     token,
-		User:      *user,
+		UserID:    user.ID, // Assign the UserID field
 		ExpiresAt: expiry,
 	}
 
@@ -39,7 +39,7 @@ func GetSessionByUser(db *gorm.DB, user *models.User) (*models.Session, error) {
 
 func GetSessionByToken(db *gorm.DB, token string) (*models.Session, error) {
 	var session *models.Session
-	result := db.Where("token = ?", token).First(&session)
+	result := db.Preload("User").Where("token = ?", token).First(&session)
 	if result.Error != nil {
 		return nil, result.Error
 	}
