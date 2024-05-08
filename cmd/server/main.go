@@ -42,7 +42,6 @@ func main() {
 	stack := middleware.CreateStack(
 		middleware.Logging,
 		// middleware.IsAuthed(db),
-		// middleware.CheckPermissions,
 	)
 
 	server := http.Server{

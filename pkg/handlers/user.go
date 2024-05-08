@@ -15,7 +15,7 @@ import (
 var templates *template.Template
 var db *gorm.DB
 
-func InitUserRoutes(mux *http.ServeMux, new_db *gorm.DB) error {
+func initUserRoutes(mux *http.ServeMux, new_db *gorm.DB) error {
 	var err error
 	templates, err = utils.ParseTemplates("web/templates/user")
 	if err != nil {
@@ -90,7 +90,9 @@ func registerPost(w http.ResponseWriter, r *http.Request) {
 	if err := repository.CreateUser(db, &createdUser); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
 	w.WriteHeader(http.StatusCreated)
+	http.Redirect(w, r, "/home/", http.StatusSeeOther)
 }
 
 func loginGet(w http.ResponseWriter, r *http.Request) {
@@ -145,6 +147,8 @@ func loginPost(w http.ResponseWriter, r *http.Request) {
 		Secure:   false, // get rid of on htttps
 		HttpOnly: false, // for javascript
 	})
+
+	http.Redirect(w, r, "/home/", http.StatusSeeOther)
 }
 
 func profile(w http.ResponseWriter, r *http.Request) {
@@ -163,7 +167,6 @@ func me(w http.ResponseWriter, r *http.Request) {
 		"Username": user.Username,
 	}
 
-	// Execute the template with the user values
 	err = templates.ExecuteTemplate(w, "me.html", data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
