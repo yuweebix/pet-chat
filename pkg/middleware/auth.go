@@ -14,10 +14,14 @@ func IsAuthed(db *gorm.DB) Middleware {
 			c, err := r.Cookie("session_token")
 			if err != nil {
 				if errors.Is(err, http.ErrNoCookie) {
-					http.Error(w, err.Error(), http.StatusUnauthorized)
+					// http.Error(w, err.Error(), http.StatusUnauthorized)
+					// http.Redirect(w, r, "/", http.StatusSeeOther)
+					http.Redirect(w, r, "/", http.StatusUnauthorized)
 					return
 				}
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				// http.Error(w, err.Error(), http.StatusBadRequest)
+				// http.Redirect(w, r, "/", http.StatusUnauthorized)
+				http.Redirect(w, r, "/", http.StatusBadRequest)
 				return
 			}
 
@@ -25,7 +29,9 @@ func IsAuthed(db *gorm.DB) Middleware {
 			session, err := repository.GetSessionByToken(db, clientToken)
 
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusUnauthorized)
+				// http.Error(w, err.Error(), http.StatusUnauthorized)
+				// http.Redirect(w, r, "/", http.StatusSeeOther)
+				http.Redirect(w, r, "/", http.StatusUnauthorized)
 				return
 			}
 
@@ -60,7 +66,7 @@ func IsUnauthed(db *gorm.DB) Middleware {
 				return
 			}
 
-			// this functions seems to be useless, cuz I ain't receiving them cookies if they are expired :9
+			// this condition seems to be useless, cuz I ain't receiving them cookies if they are expired :9
 			if session.IsExpired() {
 				if err := repository.DeleteSession(db, session); err != nil {
 					http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -70,7 +76,9 @@ func IsUnauthed(db *gorm.DB) Middleware {
 				return
 			}
 
-			http.Error(w, "Already authenticated", http.StatusForbidden)
+			// http.Error(w, "Already authenticated", http.StatusForbidden)
+			// http.Redirect(w, r, "/home/", http.StatusSeeOther)
+			http.Redirect(w, r, "/home/", http.StatusForbidden)
 		})
 	}
 }
